@@ -1,7 +1,31 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchMark7.Renderer", "BenchMark7.Renderer\BenchMark7.Renderer.csproj", "{815F86DC-7D5A-423D-B9AB-11E80FB6C636}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchMark7.Driver", "BenchMark7.Driver\BenchMark7.Driver.csproj", "{0F5D07D4-6F10-450D-9410-C5B364E6D80A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchMark7", "BenchMark7\BenchMark7.csproj", "{EF1C660B-9386-47F6-8646-B5A0458B3F56}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{815F86DC-7D5A-423D-B9AB-11E80FB6C636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{815F86DC-7D5A-423D-B9AB-11E80FB6C636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{815F86DC-7D5A-423D-B9AB-11E80FB6C636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{815F86DC-7D5A-423D-B9AB-11E80FB6C636}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F5D07D4-6F10-450D-9410-C5B364E6D80A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F5D07D4-6F10-450D-9410-C5B364E6D80A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F5D07D4-6F10-450D-9410-C5B364E6D80A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F5D07D4-6F10-450D-9410-C5B364E6D80A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF1C660B-9386-47F6-8646-B5A0458B3F56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF1C660B-9386-47F6-8646-B5A0458B3F56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF1C660B-9386-47F6-8646-B5A0458B3F56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF1C660B-9386-47F6-8646-B5A0458B3F56}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
