@@ -8,5 +8,12 @@ namespace BenchMark7.Renderer
 {
     class PixelShaderInput
     {
+        public int RenderTargetX { get; set; }
+        public int RenderTargetY { get; set; }
+
+        public Vector4 Position { get; set; }
+        public Vector4 Normal { get; set; }
+        public Vector2 TextureCoord { get; set; }
+        public Vector3 Color { get; set; }
     }
 }

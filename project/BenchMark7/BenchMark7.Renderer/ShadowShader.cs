@@ -11,5 +11,15 @@ namespace BenchMark7.Renderer
             : base(engine)
         {
         }
+
+        protected override VertexShaderOutput VertexShader(VertexShaderInput input)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void PixelShader(PixelShaderInput input)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

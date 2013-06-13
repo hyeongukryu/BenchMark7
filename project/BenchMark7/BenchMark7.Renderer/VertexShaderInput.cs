@@ -8,5 +8,6 @@ namespace BenchMark7.Renderer
 {
     class VertexShaderInput
     {
+        public Vertex Vertex { get; set; }
     }
 }

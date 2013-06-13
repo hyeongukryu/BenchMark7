@@ -14,7 +14,7 @@ namespace BenchMark7
             Color = color;
         }
 
-        public Vertex(Vector3 position, Vector3 normal, Vector3 textureCoord)
+        public Vertex(Vector3 position, Vector3 normal, Vector2 textureCoord)
         {
             Position = position;
             Normal = normal;
@@ -23,7 +23,7 @@ namespace BenchMark7
 
         public Vector3 Position { get; set; }
         public Vector3 Normal { get; set; }
-        public Vector3 TextureCoord { get; set; }
+        public Vector2 TextureCoord { get; set; }
         public Vector3 Color { get; set; }
     }
 }

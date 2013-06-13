@@ -31,7 +31,7 @@ namespace BenchMark7
         {
             List<Vector3> Positions = new List<Vector3>();
             List<Vector3> Normals = new List<Vector3>();
-            List<Vector3> TextureCoords = new List<Vector3>();
+            List<Vector2> TextureCoords = new List<Vector2>();
 
             Model model = new Model();
 
@@ -58,7 +58,7 @@ namespace BenchMark7
                     else if (line[1] == 't')
                     {
                         // textureCoord
-                        TextureCoords.Add(new Vector3(x, y, z));
+                        TextureCoords.Add(new Vector2(x, y));
                     }
                     else
                     {

@@ -13,6 +13,13 @@ namespace BenchMark7
             Width = width;
             Height = height;
             Data = new Vector3[height, width];
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    Data[i, j] = new Vector3();
+                }
+            }
         }
 
         public int Width { get; set; }
@@ -32,6 +39,9 @@ namespace BenchMark7
 
         public Vector3 Sample(float u, float v)
         {
+            u = u / 2.0f + 0.5f;
+            v = v / 2.0f + 0.5f;
+
             u = u * Width - 0.5f;
             v = v * Height - 0.5f;
             int x = (int)Math.Floor(u);

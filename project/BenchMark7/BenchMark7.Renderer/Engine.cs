@@ -15,11 +15,9 @@ namespace BenchMark7.Renderer
         public int Height { get; set; }
 
         public Buffer1 DepthBuffer { get; set; }
-
-        public Buffer3 PositionBuffer { get; set; }
         public Buffer3 NormalBuffer { get; set; }
 
-        public Buffer3 DiffuseBuffer { get; set; }
+        public Buffer3 AlbedoBuffer { get; set; }
         public Buffer1 SpecularPowerBuffer { get; set; }
         public Buffer1 SpecularIntensityBuffer { get; set; }
 
@@ -29,7 +27,8 @@ namespace BenchMark7.Renderer
         internal GBufferShader GBufferShader { get; set; }
         internal AmbientLightShader AmbientLightShader { get; set; }
         internal PointLightShader PointLightShader { get; set; }
-        
+
+        public Matrix ViewportTransform { get; set; }
 
         public Engine(int width, int height)
         {
@@ -38,14 +37,15 @@ namespace BenchMark7.Renderer
 
             InitializeBuffers();
             InitializeShaders();
+
+            ViewportTransform = Matrix.CreateViewport(width, height, 1, 0);
         }
 
         private void InitializeBuffers()
         {
+            AlbedoBuffer = new Buffer3(Width, Height);
             DepthBuffer = new Buffer1(Width, Height);
-            PositionBuffer = new Buffer3(Width, Height);
             NormalBuffer = new Buffer3(Width, Height);
-            DiffuseBuffer = new Buffer3(Width, Height);
             SpecularPowerBuffer = new Buffer1(Width, Height);
             SpecularIntensityBuffer = new Buffer1(Width, Height);
             BackBuffer = new Buffer3(Width, Height);
@@ -57,6 +57,8 @@ namespace BenchMark7.Renderer
             GBufferShader = new GBufferShader(this);
             AmbientLightShader = new AmbientLightShader(this);
             PointLightShader = new PointLightShader(this);
+            
+            AmbientLightShader.Intensity = 0.5f;
         }
 
         public void ClearRenderTargets()
@@ -77,8 +79,25 @@ namespace BenchMark7.Renderer
             }
 
             // 화면 전체를 덮는 사각형으로 조명 처리
-            AmbientLightShader.DrawPrimitive(null);
-            PointLightShader.DrawPrimitive(null);
+            Camera.World = Camera.View = Camera.Projection = Matrix.CreateIdentity();
+            var full = new Triangle[] {
+                new Triangle(
+                    new Vertex(new Vector3(-1, 1, 0), new Vector3(1, 1, 1)),
+                    new Vertex(new Vector3(-1, -1, 0), new Vector3(1, 1, 1)),
+                    new Vertex(new Vector3(1, 1, 0), new Vector3(1, 1, 1))
+                    ),
+                new Triangle(
+                    new Vertex(new Vector3(1, 1, 0), new Vector3(1, 1, 1)),
+                    new Vertex(new Vector3(-1, -1, 0), new Vector3(1, 1, 1)),
+                    new Vertex(new Vector3(1, -1, 0), new Vector3(1, 1, 1))
+                    )
+            };
+
+            foreach (var triangle in full)
+            {
+                AmbientLightShader.DrawPrimitive(triangle);
+                PointLightShader.DrawPrimitive(triangle);
+            }
         }
 
         public void Render(Model model, Camera camera)
@@ -87,6 +106,6 @@ namespace BenchMark7.Renderer
             Camera = camera;
 
             Render();
-        }        
+        }
     }
 }
