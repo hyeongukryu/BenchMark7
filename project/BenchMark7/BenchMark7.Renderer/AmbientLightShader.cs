@@ -21,7 +21,7 @@ namespace BenchMark7.Renderer
             return new VertexShaderOutput
             {
                 Position = position,
-                Normal = null
+                Color = input.Vertex.Color
             };
         }
 

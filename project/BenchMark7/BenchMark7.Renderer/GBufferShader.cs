@@ -13,20 +13,11 @@ namespace BenchMark7.Renderer
         }
 
         protected override VertexShaderOutput VertexShader(VertexShaderInput input)
-        {
-            var camera = Engine.Camera;
-
-            Vector4 position = new Vector4(input.Vertex.Position, 1);
-            Vector4 normal = new Vector4(input.Vertex.Normal, 0);
-
-            position *= camera.World;
-            position *= camera.View;
-            position *= camera.Projection;
-
+        {                        
             return new VertexShaderOutput
             {
-                Position = position,
-                Normal = normal,
+                Position = new Vector4(input.Vertex.Position, 1) * Engine.Camera.Transform,
+                Normal = new Vector4(input.Vertex.Normal, 0),
                 TextureCoord = input.Vertex.TextureCoord,
                 Color = input.Vertex.Color
             };
@@ -41,15 +32,11 @@ namespace BenchMark7.Renderer
             if (input.TextureCoord != null)
             {
                 albedo = Engine.Model.Texture.Sample(
-                    input.TextureCoord.X, input.TextureCoord.Y);
+                    input.TextureCoord.Y, input.TextureCoord.X);
             }
-
-            float depth = 0;
-
-            Vector3 normal = null;
-            
-            Engine.DepthBuffer.Data[y, x] = depth;
-            Engine.NormalBuffer.Data[y, x] = normal;
+                        
+            Engine.DepthBuffer.Data[y, x] = input.Position.Z;
+            Engine.NormalBuffer.Data[y, x] = new Vector3(input.Normal.X, input.Normal.Y, input.Normal.Z);
             Engine.AlbedoBuffer.Data[y, x] = albedo;
             Engine.SpecularIntensityBuffer.Data[y, x] = 10;
             Engine.SpecularPowerBuffer.Data[y, x] = 10;

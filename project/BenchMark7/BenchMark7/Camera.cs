@@ -18,5 +18,12 @@ namespace BenchMark7
         public Matrix World { get; set; }
         public Matrix View { get; set; }
         public Matrix Projection { get; set; }
+
+        public Matrix Transform { get; set; }
+
+        public void Freeze()
+        {
+            Transform = World * View * Projection;
+        }
     }
 }

@@ -81,17 +81,53 @@ namespace BenchMark7.Renderer
                 {
                     if (CX1 > 0 && CX2 > 0 && CX3 > 0)
                     {
-                        if (Engine.DepthBuffer.Data[y, x] > -100)
+                        float b1 = ((viewportB.Y - viewportC.Y) * (x - viewportC.X) + (viewportC.X - viewportB.X) * (y - viewportC.Y))
+                                / ((viewportB.Y - viewportC.Y) * (viewportA.X - viewportC.X) + (viewportC.X - viewportB.X) * (viewportA.Y - viewportC.Y));
+
+                        float b2 = ((viewportC.Y - viewportA.Y) * (x - viewportC.X) + (viewportA.X - viewportC.X) * (y - viewportC.Y))
+                            / ((viewportB.Y - viewportC.Y) * (viewportA.X - viewportC.X) + (viewportC.X - viewportB.X) * (viewportA.Y - viewportC.Y));
+
+                        float b3 = 1 - b1 - b2;
+
+                        var position = new Vector4(
+                                        b1 * a.Position.X + b2 * b.Position.X + b3 * c.Position.X,
+                                        b1 * a.Position.Y + b2 * b.Position.Y + b3 * c.Position.Y,
+                                        b1 * a.Position.Z + b2 * b.Position.Z + b3 * c.Position.Z,
+                                        b1 * a.Position.W + b2 * b.Position.W + b3 * c.Position.W
+                                        );
+
+                        if (Engine.DepthBuffer.Data[y, x] > position.Z)
                         {
-                            PixelShader(new PixelShaderInput
+                            if (a.TextureCoord != null && b.TextureCoord != null && c.TextureCoord != null)
                             {
-                                RenderTargetX = x,
-                                RenderTargetY = y,
-                                Position = a.Position,
-                                Normal = a.Normal,
-                                TextureCoord = a.TextureCoord,
-                                Color = a.Color
-                            });
+                                PixelShader(new PixelShaderInput
+                                {
+                                    RenderTargetX = x,
+                                    RenderTargetY = y,
+                                    Position = position,
+                                    Normal = a.Normal,
+                                    TextureCoord = new Vector2(
+                                        b1 * a.TextureCoord.X + b2 * b.TextureCoord.X + b3 * c.TextureCoord.X,
+                                        b1 * a.TextureCoord.Y + b2 * b.TextureCoord.Y + b3 * c.TextureCoord.Y
+                                        ),
+                                    Color = a.Color
+                                });
+                            }
+                            else
+                            {
+                                PixelShader(new PixelShaderInput
+                                {
+                                    RenderTargetX = x,
+                                    RenderTargetY = y,
+                                    Position = position,
+                                    Normal = a.Normal,
+                                    Color = new Vector3(
+                                        b1 * a.Color.X + b2 * b.Color.X + b3 * c.Color.X,
+                                        b1 * a.Color.Y + b2 * b.Color.Y + b3 * c.Color.Y,
+                                        b1 * a.Color.Z + b2 * b.Color.Z + b3 * c.Color.Z
+                                        )
+                                });
+                            }
                         }
                     }
 

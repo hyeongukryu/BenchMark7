@@ -63,12 +63,14 @@ namespace BenchMark7.Renderer
 
         public void ClearRenderTargets()
         {
-            DepthBuffer.Clear(float.MinValue);
+            DepthBuffer.Clear(float.MaxValue);
         }
 
         private void Render()
         {
             ClearRenderTargets();
+
+            Camera.Freeze();
 
             // 바닥 렌더링
 
