@@ -19,7 +19,6 @@ namespace BenchMark7.Driver
             Stopwatch watch = Stopwatch.StartNew();
 
             string path = @"Mark7.obj";
-            // string path = @"C:\Users\HyeongUk\Documents\GitHub\BenchMark7\models\stanford_dragon\dragon.obj";
             string content = File.ReadAllText(path);
 
             string texturePath = @"Mark7.bmp";
