@@ -39,8 +39,8 @@ namespace BenchMark7.Renderer
             Engine.DepthBuffer.Data[y, x] = input.Position.Z;
             Engine.NormalBuffer.Data[y, x] = new Vector3(input.Normal.X, input.Normal.Y, input.Normal.Z);
             Engine.AlbedoBuffer.Data[y, x] = albedo;
-            Engine.SpecularIntensityBuffer.Data[y, x] = 20f;
-            Engine.SpecularPowerBuffer.Data[y, x] = 10f;
+            Engine.SpecularIntensityBuffer.Data[y, x] = 15f;
+            Engine.SpecularPowerBuffer.Data[y, x] = 15f;
         }
     }
 }

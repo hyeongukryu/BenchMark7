@@ -39,10 +39,16 @@ namespace BenchMark7.Renderer
 
             if (dot < 0)
                 dot = 0;
-
-            Engine.BackBuffer.Data[y, x] += Engine.AlbedoBuffer.Data[y, x] * (Intensity * dot
-                + (float)Math.Pow(Math.Max(0, Vector4.Dot(N, H)), Engine.SpecularPowerBuffer.Data[y, x])
-                * Engine.SpecularIntensityBuffer.Data[y, x]);
+            
+            Engine.BackBuffer.Data[y, x] += Engine.AlbedoBuffer.Data[y, x] * Intensity * dot;
+            
+            Engine.BackBuffer.Data[y, x] += Engine.AlbedoBuffer.Data[y, x] *
+                (float)Math.Pow(Math.Max(0, Vector4.Dot(N, H)), Engine.SpecularPowerBuffer.Data[y, x])
+                * Engine.SpecularIntensityBuffer.Data[y, x];
+                        
+            Engine.BackBuffer.Data[y, x] += new Vector3(1, 1, 1) *
+                (float)Math.Pow(Math.Max(0, Vector4.Dot(N, H)), Engine.SpecularPowerBuffer.Data[y, x] + 10)
+                * Engine.SpecularIntensityBuffer.Data[y, x];
         }
     }
 }

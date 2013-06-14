@@ -94,7 +94,7 @@ namespace BenchMark7.Renderer
                     )
             };
 
-            PointLightShader.Intensity = 0.35f;
+            PointLightShader.Intensity = 0.4f;
             PointLightShader.LightPosition = new Vector4(200, 0, 420, 1) * Camera.Transform;
 
             foreach (var triangle in full)

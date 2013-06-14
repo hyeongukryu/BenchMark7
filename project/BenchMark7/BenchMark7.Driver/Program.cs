@@ -62,7 +62,7 @@ namespace BenchMark7.Driver
             BitmapData backBufferbitmapData = backBufferbitmap.LockBits(new Rectangle(0, 0, width, height),
                 ImageLockMode.WriteOnly, PixelFormat.Format24bppRgb);
 
-            var backBufferData = engine.BackBuffer.Data;
+            object buffer = engine.BackBuffer;
 
             int backBufferBytes = Math.Abs(backBufferbitmapData.Stride) * height;
             byte[] rgbValues = new byte[backBufferBytes];
@@ -71,9 +71,18 @@ namespace BenchMark7.Driver
             {
                 for (int j = 0; j < width; j++)
                 {
-                    rgbValues[i * backBufferbitmapData.Stride + j * 3 + 0] = MathHelper.BitmapClamp(backBufferData[i, j].X);
-                    rgbValues[i * backBufferbitmapData.Stride + j * 3 + 1] = MathHelper.BitmapClamp(backBufferData[i, j].Y);
-                    rgbValues[i * backBufferbitmapData.Stride + j * 3 + 2] = MathHelper.BitmapClamp(backBufferData[i, j].Z);
+                    if (buffer is Buffer3)
+                    {
+                        rgbValues[i * backBufferbitmapData.Stride + j * 3 + 0] = MathHelper.BitmapClamp((buffer as Buffer3).Data[i, j].X);
+                        rgbValues[i * backBufferbitmapData.Stride + j * 3 + 1] = MathHelper.BitmapClamp((buffer as Buffer3).Data[i, j].Y);
+                        rgbValues[i * backBufferbitmapData.Stride + j * 3 + 2] = MathHelper.BitmapClamp((buffer as Buffer3).Data[i, j].Z);
+                    }
+                    else
+                    {
+                        rgbValues[i * backBufferbitmapData.Stride + j * 3 + 0] = MathHelper.BitmapClamp((buffer as Buffer1).Data[i, j]);
+                        rgbValues[i * backBufferbitmapData.Stride + j * 3 + 1] = MathHelper.BitmapClamp((buffer as Buffer1).Data[i, j]);
+                        rgbValues[i * backBufferbitmapData.Stride + j * 3 + 2] = MathHelper.BitmapClamp((buffer as Buffer1).Data[i, j]);
+                    }
                 }
             }
 
