@@ -43,5 +43,55 @@ namespace BenchMark7
         public float Y { get; set; }
         public float Z { get; set; }
         public float W { get; set; }
+
+        public static Vector4 Normalize(Vector4 v)
+        {
+            float l = (float)Math.Sqrt(v.X * v.X + v.Y * v.Y + v.Z * v.Z + v.W * v.W);
+            return new Vector4
+            {
+                X = v.X / l,
+                Y = v.Y / l,
+                Z = v.Z / l,
+                W = v.W / l
+            };
+        }
+
+        public static Vector4 operator +(Vector4 v1, Vector4 v2)
+        {
+            return new Vector4
+            {
+                X = v1.X + v2.X,
+                Y = v1.Y + v2.Y,
+                Z = v1.Z + v2.Z,
+                W = v1.W + v2.W
+            };
+        }
+
+        public static Vector4 operator -(Vector4 v1, Vector4 v2)
+        {
+            return new Vector4
+            {
+                X = v1.X - v2.X,
+                Y = v1.Y - v2.Y,
+                Z = v1.Z - v2.Z,
+                W = v1.W - v2.W
+            };
+        }
+
+        public static Vector4 operator -(Vector4 v)
+        {
+            return new Vector4
+            {
+                X = -v.X,
+                Y = -v.Y,
+                Z = -v.Z,
+                W = -v.W
+            };
+        }
+
+        public static float Dot(Vector4 v1, Vector4 v2)
+        {
+            return v1.X * v2.X + v1.Y * v2.Y + v1.Z * v2.Z + v1.W * v2.W;
+        }
     }
 }

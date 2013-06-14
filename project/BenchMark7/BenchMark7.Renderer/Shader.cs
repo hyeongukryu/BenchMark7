@@ -96,38 +96,51 @@ namespace BenchMark7.Renderer
                                         b1 * a.Position.W + b2 * b.Position.W + b3 * c.Position.W
                                         );
 
-                        if (Engine.DepthBuffer.Data[y, x] > position.Z)
+                        if (0 <= x && 0 <= y && x < Engine.Width && y < Engine.Height
+                            && Engine.DepthBuffer.Data[y, x] > position.Z)
                         {
+                            Vector4 normal = null;
+                            Vector2 textureCoord = null;
+                            Vector3 color = null;
+
+                            if (a.Normal != null && b.Normal != null && c.Normal != null)
+                            {
+                                normal = new Vector4(
+                                    b1 * a.Normal.X + b2 * b.Normal.X + b3 * c.Normal.X,
+                                    b1 * a.Normal.Y + b2 * b.Normal.Y + b3 * c.Normal.Y,
+                                    b1 * a.Normal.Z + b2 * b.Normal.Z + b3 * c.Normal.Z,
+                                    b1 * a.Normal.W + b2 * b.Normal.W + b3 * c.Normal.W
+                                    );
+
+                                normal = Vector4.Normalize(normal);
+                            }
+
                             if (a.TextureCoord != null && b.TextureCoord != null && c.TextureCoord != null)
                             {
-                                PixelShader(new PixelShaderInput
-                                {
-                                    RenderTargetX = x,
-                                    RenderTargetY = y,
-                                    Position = position,
-                                    Normal = a.Normal,
-                                    TextureCoord = new Vector2(
+                                textureCoord = new Vector2(
                                         b1 * a.TextureCoord.X + b2 * b.TextureCoord.X + b3 * c.TextureCoord.X,
                                         b1 * a.TextureCoord.Y + b2 * b.TextureCoord.Y + b3 * c.TextureCoord.Y
-                                        ),
-                                    Color = a.Color
-                                });
+                                        );
                             }
-                            else
+
+                            if (a.Color != null && b.Color != null && c.Color != null)
                             {
-                                PixelShader(new PixelShaderInput
-                                {
-                                    RenderTargetX = x,
-                                    RenderTargetY = y,
-                                    Position = position,
-                                    Normal = a.Normal,
-                                    Color = new Vector3(
+                                color = new Vector3(
                                         b1 * a.Color.X + b2 * b.Color.X + b3 * c.Color.X,
                                         b1 * a.Color.Y + b2 * b.Color.Y + b3 * c.Color.Y,
                                         b1 * a.Color.Z + b2 * b.Color.Z + b3 * c.Color.Z
-                                        )
-                                });
+                                        );
                             }
+
+                            PixelShader(new PixelShaderInput
+                            {
+                                RenderTargetX = x,
+                                RenderTargetY = y,
+                                Position = position,
+                                Normal = normal,
+                                TextureCoord = textureCoord,
+                                Color = color
+                            });
                         }
                     }
 

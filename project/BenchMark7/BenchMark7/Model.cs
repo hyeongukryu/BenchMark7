@@ -56,14 +56,14 @@ namespace BenchMark7
                         Normals.Add(new Vector3(x, y, z));
                     }
                     else if (line[1] == 't')
-                    {
+                    {                        
                         // textureCoord
                         TextureCoords.Add(new Vector2(x, y));
                     }
                     else
                     {
                         // position
-                        Positions.Add(new Vector3(x, y, z));
+                        Positions.Add(new Vector3(x, y, -z));
                     }
                 }
                 else if (line[0] == 'f')
@@ -76,8 +76,8 @@ namespace BenchMark7
                     if (i.Count == 1)
                     {
                         var a = new Vertex(Positions[i[0] - 1], new Vector3(1, 0, 0));
-                        var b = new Vertex(Positions[j[0] - 1], new Vector3(1, 0, 0));
-                        var c = new Vertex(Positions[k[0] - 1], new Vector3(1, 0, 0));
+                        var b = new Vertex(Positions[j[0] - 1], new Vector3(0, 1, 0));
+                        var c = new Vertex(Positions[k[0] - 1], new Vector3(0, 0, 1));
                         model.Triangles.Add(new Triangle(a, b, c));
                     }
                     else
@@ -85,6 +85,9 @@ namespace BenchMark7
                         var a = new Vertex(Positions[i[0] - 1], Normals[i[2] - 1], TextureCoords[i[1] - 1]);
                         var b = new Vertex(Positions[j[0] - 1], Normals[j[2] - 1], TextureCoords[j[1] - 1]);
                         var c = new Vertex(Positions[k[0] - 1], Normals[k[2] - 1], TextureCoords[k[1] - 1]);
+                        a.Color = new Vector3(1, 0, 0);
+                        b.Color = new Vector3(0, 1, 0);
+                        c.Color = new Vector3(0, 0, 1);
                         model.Triangles.Add(new Triangle(a, b, c));
                     }
                 }

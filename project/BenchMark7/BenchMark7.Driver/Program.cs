@@ -16,6 +16,7 @@ namespace BenchMark7.Driver
         static void Main(string[] args)
         {
             string path = @"C:\Users\HyeongUk\Documents\GitHub\BenchMark7\models\mark7\Mark 7.obj";
+            // string path = @"C:\Users\HyeongUk\Documents\GitHub\BenchMark7\models\stanford_dragon\dragon.obj";
             string content = File.ReadAllText(path);
 
             string texturePath = @"C:\Users\HyeongUk\Documents\GitHub\BenchMark7\models\mark7\maps\mk7.bmp";
@@ -39,8 +40,8 @@ namespace BenchMark7.Driver
                 }
             }
 
-            const int width = 1280;
-            const int height = 720;
+            const int width = 3840;
+            const int height = 2160;
 
             Engine engine = new Engine(width, height);
             

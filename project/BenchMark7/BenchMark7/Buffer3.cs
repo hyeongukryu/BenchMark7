@@ -39,25 +39,39 @@ namespace BenchMark7
 
         public Vector3 Sample(float u, float v)
         {
-            u = u / 2.0f + 0.5f;
-            v = v / 2.0f + 0.5f;
+            u = -u;
+            
+            u = u * Height - 0.5f;
+            v = v * Width - 0.5f;
 
-            u = u * Width - 0.5f;
-            v = v * Height - 0.5f;
             int x = (int)Math.Floor(u);
             int y = (int)Math.Floor(v);
             float u_ratio = u - x;
             float v_ratio = v - y;
             float u_opposite = 1 - u_ratio;
             float v_opposite = 1 - v_ratio;
+            int x1 = x + 1;
+            int y1 = y + 1;
+
+            while (x < 0) x += Height;
+            while (y < 0) y += Width;
+            while (x >= Height) x -= Height;
+            while (y >= Width) y -= Width;
+
+            while (x1 < 0) x1 += Height;
+            while (y1 < 0) y1 += Width;
+            while (x1 >= Height) x1 -= Height;
+            while (y1 >= Width) y1 -= Width;
+
             Vector3 result = new Vector3(
-                (Data[x, y].X * u_opposite + Data[x + 1, y].X * u_ratio) * v_opposite +
-                (Data[x, y + 1].X * u_opposite + Data[x + 1, y + 1].X * u_ratio) * v_ratio,
-                (Data[x, y].Y * u_opposite + Data[x + 1, y].Y * u_ratio) * v_opposite +
-                (Data[x, y + 1].Y * u_opposite + Data[x + 1, y + 1].Y * u_ratio) * v_ratio,
-                (Data[x, y].Z * u_opposite + Data[x + 1, y].Z * u_ratio) * v_opposite +
-                (Data[x, y + 1].Z * u_opposite + Data[x + 1, y + 1].Z * u_ratio) * v_ratio
+                (Data[x, y].X * u_opposite + Data[x1, y].X * u_ratio) * v_opposite +
+                (Data[x, y1].X * u_opposite + Data[x1, y1].X * u_ratio) * v_ratio,
+                (Data[x, y].Y * u_opposite + Data[x1, y].Y * u_ratio) * v_opposite +
+                (Data[x, y1].Y * u_opposite + Data[x1, y1].Y * u_ratio) * v_ratio,
+                (Data[x, y].Z * u_opposite + Data[x1, y].Z * u_ratio) * v_opposite +
+                (Data[x, y1].Z * u_opposite + Data[x1, y1].Z * u_ratio) * v_ratio
                 );
+
             return result;
         }
     }

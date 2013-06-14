@@ -17,7 +17,7 @@ namespace BenchMark7.Renderer
             return new VertexShaderOutput
             {
                 Position = new Vector4(input.Vertex.Position, 1) * Engine.Camera.Transform,
-                Normal = new Vector4(input.Vertex.Normal, 0),
+                Normal = new Vector4(input.Vertex.Normal ?? new Vector3(), 0),
                 TextureCoord = input.Vertex.TextureCoord,
                 Color = input.Vertex.Color
             };
@@ -34,12 +34,13 @@ namespace BenchMark7.Renderer
                 albedo = Engine.Model.Texture.Sample(
                     input.TextureCoord.Y, input.TextureCoord.X);
             }
-                        
+
+            Engine.PositionBuffer.Data[y, x] = new Vector3(input.Position.X, input.Position.Y, input.Position.Z);
             Engine.DepthBuffer.Data[y, x] = input.Position.Z;
             Engine.NormalBuffer.Data[y, x] = new Vector3(input.Normal.X, input.Normal.Y, input.Normal.Z);
             Engine.AlbedoBuffer.Data[y, x] = albedo;
-            Engine.SpecularIntensityBuffer.Data[y, x] = 10;
-            Engine.SpecularPowerBuffer.Data[y, x] = 10;
+            Engine.SpecularIntensityBuffer.Data[y, x] = 20f;
+            Engine.SpecularPowerBuffer.Data[y, x] = 10f;
         }
     }
 }

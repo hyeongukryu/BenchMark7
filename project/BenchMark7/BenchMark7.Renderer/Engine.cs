@@ -15,6 +15,7 @@ namespace BenchMark7.Renderer
         public int Height { get; set; }
 
         public Buffer1 DepthBuffer { get; set; }
+        public Buffer3 PositionBuffer { get; set; }
         public Buffer3 NormalBuffer { get; set; }
 
         public Buffer3 AlbedoBuffer { get; set; }
@@ -44,6 +45,7 @@ namespace BenchMark7.Renderer
         private void InitializeBuffers()
         {
             AlbedoBuffer = new Buffer3(Width, Height);
+            PositionBuffer = new Buffer3(Width, Height);
             DepthBuffer = new Buffer1(Width, Height);
             NormalBuffer = new Buffer3(Width, Height);
             SpecularPowerBuffer = new Buffer1(Width, Height);
@@ -58,7 +60,7 @@ namespace BenchMark7.Renderer
             AmbientLightShader = new AmbientLightShader(this);
             PointLightShader = new PointLightShader(this);
             
-            AmbientLightShader.Intensity = 0.5f;
+            AmbientLightShader.Intensity = 0.1f;
         }
 
         public void ClearRenderTargets()
@@ -69,11 +71,8 @@ namespace BenchMark7.Renderer
         private void Render()
         {
             ClearRenderTargets();
-
             Camera.Freeze();
-
-            // 바닥 렌더링
-
+            
             // 모델 렌더링
             foreach (var triangle in Model.Triangles)
             {
@@ -94,6 +93,9 @@ namespace BenchMark7.Renderer
                     new Vertex(new Vector3(1, -1, 0), new Vector3(1, 1, 1))
                     )
             };
+
+            PointLightShader.Intensity = 0.35f;
+            PointLightShader.LightPosition = new Vector4(200, 0, 420, 1) * Camera.Transform;
 
             foreach (var triangle in full)
             {
