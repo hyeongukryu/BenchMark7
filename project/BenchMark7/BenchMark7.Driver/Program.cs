@@ -15,11 +15,11 @@ namespace BenchMark7.Driver
     {
         static void Main(string[] args)
         {
-            string path = @"C:\Users\HyeongUk\Documents\GitHub\BenchMark7\models\mark7\Mark 7.obj";
+            string path = @"Mark7.obj";
             // string path = @"C:\Users\HyeongUk\Documents\GitHub\BenchMark7\models\stanford_dragon\dragon.obj";
             string content = File.ReadAllText(path);
 
-            string texturePath = @"C:\Users\HyeongUk\Documents\GitHub\BenchMark7\models\mark7\maps\mk7.bmp";
+            string texturePath = @"Mark7.bmp";
             Bitmap textureBitmap = new Bitmap(texturePath);
             BitmapData textureBitmapData = textureBitmap.LockBits(
                 new Rectangle(0, 0, textureBitmap.Width, textureBitmap.Height),
