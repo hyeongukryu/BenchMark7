@@ -1,6 +1,7 @@
 ﻿using BenchMark7.Renderer;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -15,6 +16,8 @@ namespace BenchMark7.Driver
     {
         static void Main(string[] args)
         {
+            Stopwatch watch = Stopwatch.StartNew();
+
             string path = @"Mark7.obj";
             // string path = @"C:\Users\HyeongUk\Documents\GitHub\BenchMark7\models\stanford_dragon\dragon.obj";
             string content = File.ReadAllText(path);
@@ -90,6 +93,9 @@ namespace BenchMark7.Driver
             backBufferbitmap.UnlockBits(backBufferbitmapData);
 
             backBufferbitmap.Save("result.png");
+
+            Console.WriteLine(watch.ElapsedMilliseconds);
+            Console.ReadLine();
         }
     }
 }
