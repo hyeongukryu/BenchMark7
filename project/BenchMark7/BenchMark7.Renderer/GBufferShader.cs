@@ -17,7 +17,7 @@ namespace BenchMark7.Renderer
             return new VertexShaderOutput
             {
                 Position = new Vector4(input.Vertex.Position, 1) * Engine.Camera.Transform,
-                Normal = new Vector4(input.Vertex.Normal ?? new Vector3(), 0),
+                Normal = new Vector4(input.Vertex.Normal, 0) * Engine.Camera.Transform ?? new Vector4(),
                 TextureCoord = input.Vertex.TextureCoord,
                 Color = input.Vertex.Color
             };

@@ -33,22 +33,22 @@ namespace BenchMark7.Renderer
 
             var L = Vector4.Normalize(LightPosition - input.Position);
             var N = new Vector4(Engine.NormalBuffer.Data[y, x], 0);
-            var dot = Vector4.Dot(N, L);
             var eye = Vector4.Normalize(new Vector4(-Engine.PositionBuffer.Data[y, x], 0));
             var H = Vector4.Normalize(eye + L);
-
-            if (dot < 0)
-                dot = 0;
-            
-            Engine.BackBuffer.Data[y, x] += Engine.AlbedoBuffer.Data[y, x] * Intensity * dot;
-            
-            Engine.BackBuffer.Data[y, x] += Engine.AlbedoBuffer.Data[y, x] *
-                (float)Math.Pow(Math.Max(0, Vector4.Dot(N, H)), Engine.SpecularPowerBuffer.Data[y, x])
-                * Engine.SpecularIntensityBuffer.Data[y, x];
                         
+            Engine.BackBuffer.Data[y, x] += Engine.AlbedoBuffer.Data[y, x] * Intensity *
+                Math.Max(0, Vector4.Dot(N, L)) * (1.0f / Vector4.Dot(L, L));
+            
+            var NdotH = Vector4.Dot(N, H);
+
+            var power = Engine.SpecularPowerBuffer.Data[y, x];
+            var intensity = Engine.SpecularIntensityBuffer.Data[y, x];
+
+            Engine.BackBuffer.Data[y, x] += Engine.AlbedoBuffer.Data[y, x] *
+                (float)Math.Pow(NdotH, power) * intensity;
+              
             Engine.BackBuffer.Data[y, x] += new Vector3(1, 1, 1) *
-                (float)Math.Pow(Math.Max(0, Vector4.Dot(N, H)), Engine.SpecularPowerBuffer.Data[y, x] + 10)
-                * Engine.SpecularIntensityBuffer.Data[y, x];
+                (float)Math.Pow(NdotH, power + 10) * intensity;
         }
     }
 }

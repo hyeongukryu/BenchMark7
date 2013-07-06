@@ -18,10 +18,12 @@ namespace BenchMark7.Driver
         {
             Stopwatch watch = Stopwatch.StartNew();
 
-            string path = @"Mark7.obj";
+            Console.WriteLine("path");
+            string path = @"C:\Users\HyeongUk\Documents\GitHub\BenchMark7\models\mark42\Mark 42.obj";
             string content = File.ReadAllText(path);
 
-            string texturePath = @"Mark7.bmp";
+            Console.WriteLine("texturePath");
+            string texturePath = @"C:\Users\HyeongUk\Documents\GitHub\BenchMark7\models\mark42\maps\42.png";
             Bitmap textureBitmap = new Bitmap(texturePath);
             BitmapData textureBitmapData = textureBitmap.LockBits(
                 new Rectangle(0, 0, textureBitmap.Width, textureBitmap.Height),
@@ -42,8 +44,8 @@ namespace BenchMark7.Driver
                 }
             }
 
-            const int width = 3840;
-            const int height = 2160;
+            const int width = 1366;
+            const int height = 768;
 
             Engine engine = new Engine(width, height);
             
@@ -54,7 +56,7 @@ namespace BenchMark7.Driver
             camera.World = Matrix.CreateScale(600);
             camera.View = Matrix.CreateLook(
                 new Vector3(0, 520, 0),
-                new Vector3(0, 520, -1024),
+                new Vector3(400, 520, -1024),
                 new Vector3(1, 0, 0));
             camera.Projection = Matrix.CreateOrthogonalProjection(1280, 720, 1024, 0);
 
